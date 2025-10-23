@@ -1,0 +1,887 @@
+================================================================================
+           INDIAN FESTIVALS API - COMPLETE ENDPOINT DOCUMENTATION
+================================================================================
+
+Base URL (Local): http://localhost:8000
+Base URL (Production): https://your-app-name.onrender.com
+
+================================================================================
+ENDPOINT 1: ROOT - Welcome Message
+================================================================================
+URL: /
+Method: GET
+Description: Welcome endpoint with API information
+
+REQUEST:
+--------
+GET http://localhost:8000/
+
+RESPONSE:
+---------
+Status Code: 200 OK
+Content-Type: application/json
+
+{
+  "message": "Welcome to Indian Festivals API",
+  "version": "1.0.0",
+  "docs": "/docs",
+  "health": "/health",
+  "api_prefix": "/api/v1"
+}
+
+
+================================================================================
+ENDPOINT 2: HEALTH CHECK
+================================================================================
+URL: /health
+Method: GET
+Description: Check if the API is running and healthy
+
+REQUEST:
+--------
+GET http://localhost:8000/health
+
+RESPONSE:
+---------
+Status Code: 200 OK
+Content-Type: application/json
+
+{
+  "status": "healthy",
+  "timestamp": "2025-10-23T08:46:52.033000Z",
+  "version": "1.0.0"
+}
+
+
+================================================================================
+ENDPOINT 3: GET ALL FESTIVALS FOR A YEAR
+================================================================================
+URL: /api/v1/festivals/{year}
+Method: GET
+Description: Retrieve all Indian festivals and holidays for a specific year
+
+Parameters:
+-----------
+- year (path, required): Year between 1900-2100
+- month (query, optional): Month number 1-12 to filter results
+
+REQUEST 1: Get all festivals for 2026
+---------------------------------------
+GET http://localhost:8000/api/v1/festivals/2026
+
+RESPONSE:
+---------
+Status Code: 200 OK
+Content-Type: application/json
+
+{
+  "year": 2026,
+  "month": null,
+  "festivals": {
+    "January": [
+      {
+        "date": "1",
+        "day": "Thursday",
+        "name": "New Year",
+        "month": null
+      },
+      {
+        "date": "13",
+        "day": "Tuesday",
+        "name": "Lohri",
+        "month": null
+      },
+      {
+        "date": "14",
+        "day": "Wednesday",
+        "name": "Pongal, Uttarayan, Makar Sankranti",
+        "month": null
+      },
+      {
+        "date": "23",
+        "day": "Friday",
+        "name": "Subhas Chandra Bose Jayanti",
+        "month": null
+      },
+      {
+        "date": "26",
+        "day": "Monday",
+        "name": "Republic Day",
+        "month": null
+      }
+    ],
+    "February": [
+      {
+        "date": "12",
+        "day": "Thursday",
+        "name": "Vasant Panchami",
+        "month": null
+      },
+      {
+        "date": "19",
+        "day": "Thursday",
+        "name": "Maha Shivratri",
+        "month": null
+      }
+    ],
+    "March": [
+      {
+        "date": "9",
+        "day": "Monday",
+        "name": "Holika Dahan",
+        "month": null
+      },
+      {
+        "date": "10",
+        "day": "Tuesday",
+        "name": "Holi",
+        "month": null
+      },
+      {
+        "date": "14",
+        "day": "Saturday",
+        "name": "Ugadi",
+        "month": null
+      },
+      {
+        "date": "30",
+        "day": "Monday",
+        "name": "Rama Navami",
+        "month": null
+      }
+    ],
+    "April": [
+      {
+        "date": "2",
+        "day": "Thursday",
+        "name": "Mahavir Jayanti",
+        "month": null
+      },
+      {
+        "date": "10",
+        "day": "Friday",
+        "name": "Good Friday",
+        "month": null
+      },
+      {
+        "date": "14",
+        "day": "Tuesday",
+        "name": "Ambedkar Jayanti, Vaisakhi",
+        "month": null
+      }
+    ],
+    "May": [
+      {
+        "date": "1",
+        "day": "Friday",
+        "name": "Labour Day",
+        "month": null
+      },
+      {
+        "date": "9",
+        "day": "Saturday",
+        "name": "Rabindranath Tagore Jayanti",
+        "month": null
+      }
+    ],
+    "June": [
+      {
+        "date": "No major festivals listed",
+        "day": "",
+        "name": "",
+        "month": null
+      }
+    ],
+    "July": [
+      {
+        "date": "No major festivals listed",
+        "day": "",
+        "name": "",
+        "month": null
+      }
+    ],
+    "August": [
+      {
+        "date": "15",
+        "day": "Saturday",
+        "name": "Independence Day",
+        "month": null
+      },
+      {
+        "date": "16",
+        "day": "Sunday",
+        "name": "Parsi New Year",
+        "month": null
+      },
+      {
+        "date": "27",
+        "day": "Thursday",
+        "name": "Janmashtami",
+        "month": null
+      }
+    ],
+    "September": [
+      {
+        "date": "5",
+        "day": "Saturday",
+        "name": "Ganesh Chaturthi",
+        "month": null
+      }
+    ],
+    "October": [
+      {
+        "date": "2",
+        "day": "Friday",
+        "name": "Gandhi Jayanti",
+        "month": null
+      },
+      {
+        "date": "13",
+        "day": "Tuesday",
+        "name": "Dussehra",
+        "month": null
+      },
+      {
+        "date": "23",
+        "day": "Friday",
+        "name": "Karwa Chauth",
+        "month": null
+      }
+    ],
+    "November": [
+      {
+        "date": "1",
+        "day": "Sunday",
+        "name": "Diwali",
+        "month": null
+      },
+      {
+        "date": "2",
+        "day": "Monday",
+        "name": "Govardhan Puja",
+        "month": null
+      },
+      {
+        "date": "3",
+        "day": "Tuesday",
+        "name": "Bhai Dooj",
+        "month": null
+      },
+      {
+        "date": "14",
+        "day": "Saturday",
+        "name": "Children's Day",
+        "month": null
+      },
+      {
+        "date": "30",
+        "day": "Monday",
+        "name": "Guru Nanak Jayanti",
+        "month": null
+      }
+    ],
+    "December": [
+      {
+        "date": "25",
+        "day": "Friday",
+        "name": "Christmas",
+        "month": null
+      }
+    ]
+  }
+}
+
+REQUEST 2: Get festivals for January 2026 (using query parameter)
+------------------------------------------------------------------
+GET http://localhost:8000/api/v1/festivals/2026?month=1
+
+RESPONSE:
+---------
+Status Code: 200 OK
+Content-Type: application/json
+
+{
+  "year": 2026,
+  "month": 1,
+  "festivals": {
+    "January": [
+      {
+        "date": "1",
+        "day": "Thursday",
+        "name": "New Year",
+        "month": null
+      },
+      {
+        "date": "13",
+        "day": "Tuesday",
+        "name": "Lohri",
+        "month": null
+      },
+      {
+        "date": "14",
+        "day": "Wednesday",
+        "name": "Pongal, Uttarayan, Makar Sankranti",
+        "month": null
+      },
+      {
+        "date": "23",
+        "day": "Friday",
+        "name": "Subhas Chandra Bose Jayanti",
+        "month": null
+      },
+      {
+        "date": "26",
+        "day": "Monday",
+        "name": "Republic Day",
+        "month": null
+      }
+    ]
+  }
+}
+
+
+================================================================================
+ENDPOINT 4: GET FESTIVALS BY SPECIFIC MONTH
+================================================================================
+URL: /api/v1/festivals/{year}/month/{month}
+Method: GET
+Description: Retrieve Indian festivals for a specific month and year
+
+Parameters:
+-----------
+- year (path, required): Year between 1900-2100
+- month (path, required): Month number 1-12
+
+REQUEST: Get festivals for January 2026
+----------------------------------------
+GET http://localhost:8000/api/v1/festivals/2026/month/1
+
+RESPONSE:
+---------
+Status Code: 200 OK
+Content-Type: application/json
+
+{
+  "year": 2026,
+  "month": 1,
+  "festivals": {
+    "January": [
+      {
+        "date": "1",
+        "day": "Thursday",
+        "name": "New Year",
+        "month": null
+      },
+      {
+        "date": "13",
+        "day": "Tuesday",
+        "name": "Lohri",
+        "month": null
+      },
+      {
+        "date": "14",
+        "day": "Wednesday",
+        "name": "Pongal, Uttarayan, Makar Sankranti",
+        "month": null
+      },
+      {
+        "date": "23",
+        "day": "Friday",
+        "name": "Subhas Chandra Bose Jayanti",
+        "month": null
+      },
+      {
+        "date": "26",
+        "day": "Monday",
+        "name": "Republic Day",
+        "month": null
+      }
+    ]
+  }
+}
+
+
+================================================================================
+ENDPOINT 5: GET RELIGIOUS FESTIVALS FOR A YEAR
+================================================================================
+URL: /api/v1/festivals/{year}/religious
+Method: GET
+Description: Retrieve religious festivals organized by religion
+
+Parameters:
+-----------
+- year (path, required): Year between 1900-2100
+- month (query, optional): Month number 1-12 to filter results
+
+REQUEST 1: Get all religious festivals for 2026
+------------------------------------------------
+GET http://localhost:8000/api/v1/festivals/2026/religious
+
+RESPONSE:
+---------
+Status Code: 200 OK
+Content-Type: application/json
+
+{
+  "year": 2026,
+  "month": null,
+  "religious_festivals": {
+    "Hindu Festivals": [
+      {
+        "date": "14",
+        "day": "Wednesday",
+        "name": "Pongal",
+        "month": "January"
+      },
+      {
+        "date": "14",
+        "day": "Wednesday",
+        "name": "Uttarayan",
+        "month": "January"
+      },
+      {
+        "date": "14",
+        "day": "Wednesday",
+        "name": "Makar Sankranti",
+        "month": "January"
+      },
+      {
+        "date": "12",
+        "day": "Thursday",
+        "name": "Vasant Panchami",
+        "month": "February"
+      },
+      {
+        "date": "19",
+        "day": "Thursday",
+        "name": "Maha Shivratri",
+        "month": "February"
+      },
+      {
+        "date": "9",
+        "day": "Monday",
+        "name": "Holika Dahan",
+        "month": "March"
+      },
+      {
+        "date": "10",
+        "day": "Tuesday",
+        "name": "Holi",
+        "month": "March"
+      },
+      {
+        "date": "14",
+        "day": "Saturday",
+        "name": "Ugadi",
+        "month": "March"
+      },
+      {
+        "date": "30",
+        "day": "Monday",
+        "name": "Rama Navami",
+        "month": "March"
+      },
+      {
+        "date": "27",
+        "day": "Thursday",
+        "name": "Janmashtami",
+        "month": "August"
+      },
+      {
+        "date": "5",
+        "day": "Saturday",
+        "name": "Ganesh Chaturthi",
+        "month": "September"
+      },
+      {
+        "date": "13",
+        "day": "Tuesday",
+        "name": "Dussehra",
+        "month": "October"
+      },
+      {
+        "date": "23",
+        "day": "Friday",
+        "name": "Karwa Chauth",
+        "month": "October"
+      },
+      {
+        "date": "1",
+        "day": "Sunday",
+        "name": "Diwali",
+        "month": "November"
+      },
+      {
+        "date": "2",
+        "day": "Monday",
+        "name": "Govardhan Puja",
+        "month": "November"
+      },
+      {
+        "date": "3",
+        "day": "Tuesday",
+        "name": "Bhai Dooj",
+        "month": "November"
+      }
+    ],
+    "Government Holidays": [
+      {
+        "date": "26",
+        "day": "Monday",
+        "name": "Republic Day",
+        "month": "January"
+      },
+      {
+        "date": "1",
+        "day": "Friday",
+        "name": "Labour Day",
+        "month": "May"
+      },
+      {
+        "date": "15",
+        "day": "Saturday",
+        "name": "Independence Day",
+        "month": "August"
+      },
+      {
+        "date": "2",
+        "day": "Friday",
+        "name": "Gandhi Jayanti",
+        "month": "October"
+      }
+    ],
+    "Sikh Festivals": [
+      {
+        "date": "13",
+        "day": "Tuesday",
+        "name": "Lohri",
+        "month": "January"
+      },
+      {
+        "date": "14",
+        "day": "Tuesday",
+        "name": "Vaisakhi",
+        "month": "April"
+      },
+      {
+        "date": "30",
+        "day": "Monday",
+        "name": "Guru Nanak Jayanti",
+        "month": "November"
+      }
+    ],
+    "Christian Holidays": [
+      {
+        "date": "10",
+        "day": "Friday",
+        "name": "Good Friday",
+        "month": "April"
+      },
+      {
+        "date": "25",
+        "day": "Friday",
+        "name": "Christmas",
+        "month": "December"
+      }
+    ],
+    "Islamic Holidays": []
+  }
+}
+
+REQUEST 2: Get religious festivals for January 2026
+----------------------------------------------------
+GET http://localhost:8000/api/v1/festivals/2026/religious?month=1
+
+RESPONSE:
+---------
+Status Code: 200 OK
+Content-Type: application/json
+
+{
+  "year": 2026,
+  "month": 1,
+  "religious_festivals": {
+    "Hindu Festivals": [
+      {
+        "date": "14",
+        "day": "Wednesday",
+        "name": "Pongal",
+        "month": null
+      },
+      {
+        "date": "14",
+        "day": "Wednesday",
+        "name": "Uttarayan",
+        "month": null
+      },
+      {
+        "date": "14",
+        "day": "Wednesday",
+        "name": "Makar Sankranti",
+        "month": null
+      }
+    ],
+    "Government Holidays": [
+      {
+        "date": "26",
+        "day": "Monday",
+        "name": "Republic Day",
+        "month": null
+      }
+    ],
+    "Sikh Festivals": [
+      {
+        "date": "13",
+        "day": "Tuesday",
+        "name": "Lohri",
+        "month": null
+      }
+    ],
+    "Christian Holidays": [],
+    "Islamic Holidays": []
+  }
+}
+
+
+================================================================================
+ENDPOINT 6: GET RELIGIOUS FESTIVALS BY SPECIFIC MONTH
+================================================================================
+URL: /api/v1/festivals/{year}/religious/month/{month}
+Method: GET
+Description: Retrieve religious festivals for a specific month organized by religion
+
+Parameters:
+-----------
+- year (path, required): Year between 1900-2100
+- month (path, required): Month number 1-12
+
+REQUEST: Get religious festivals for January 2026
+--------------------------------------------------
+GET http://localhost:8000/api/v1/festivals/2026/religious/month/1
+
+RESPONSE:
+---------
+Status Code: 200 OK
+Content-Type: application/json
+
+{
+  "year": 2026,
+  "month": 1,
+  "religious_festivals": {
+    "Hindu Festivals": [
+      {
+        "date": "14",
+        "day": "Wednesday",
+        "name": "Pongal",
+        "month": null
+      },
+      {
+        "date": "14",
+        "day": "Wednesday",
+        "name": "Uttarayan",
+        "month": null
+      },
+      {
+        "date": "14",
+        "day": "Wednesday",
+        "name": "Makar Sankranti",
+        "month": null
+      }
+    ],
+    "Government Holidays": [
+      {
+        "date": "26",
+        "day": "Monday",
+        "name": "Republic Day",
+        "month": null
+      }
+    ],
+    "Sikh Festivals": [
+      {
+        "date": "13",
+        "day": "Tuesday",
+        "name": "Lohri",
+        "month": null
+      }
+    ],
+    "Christian Holidays": [],
+    "Islamic Holidays": []
+  }
+}
+
+
+================================================================================
+ERROR RESPONSES
+================================================================================
+
+ERROR 1: Invalid Year
+----------------------
+REQUEST:
+GET http://localhost:8000/api/v1/festivals/1800
+
+RESPONSE:
+Status Code: 422 Unprocessable Entity
+Content-Type: application/json
+
+{
+  "detail": [
+    {
+      "type": "greater_than_equal",
+      "loc": ["path", "year"],
+      "msg": "Input should be greater than or equal to 1900",
+      "input": "1800"
+    }
+  ]
+}
+
+
+ERROR 2: Invalid Month
+-----------------------
+REQUEST:
+GET http://localhost:8000/api/v1/festivals/2026?month=13
+
+RESPONSE:
+Status Code: 422 Unprocessable Entity
+Content-Type: application/json
+
+{
+  "detail": [
+    {
+      "type": "less_than_equal",
+      "loc": ["query", "month"],
+      "msg": "Input should be less than or equal to 12",
+      "input": "13"
+    }
+  ]
+}
+
+
+ERROR 3: No Festivals Found
+----------------------------
+REQUEST:
+GET http://localhost:8000/api/v1/festivals/2026/month/6
+
+RESPONSE:
+Status Code: 404 Not Found
+Content-Type: application/json
+
+{
+  "detail": "No festivals found for 2026-06"
+}
+
+
+ERROR 4: Rate Limit Exceeded
+-----------------------------
+REQUEST:
+(After exceeding 100 requests per minute)
+
+RESPONSE:
+Status Code: 429 Too Many Requests
+Content-Type: application/json
+Headers:
+  Retry-After: 60
+  X-RateLimit-Limit: 100
+  X-RateLimit-Remaining: 0
+  X-RateLimit-Reset: 1698052140
+
+{
+  "detail": "Rate limit exceeded. Please try again later.",
+  "retry_after": 60
+}
+
+
+ERROR 5: Internal Server Error
+-------------------------------
+RESPONSE:
+Status Code: 500 Internal Server Error
+Content-Type: application/json
+
+{
+  "detail": "An unexpected error occurred. Please try again later."
+}
+
+
+================================================================================
+RESPONSE HEADERS (Common to all endpoints)
+================================================================================
+
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Methods: *
+Access-Control-Allow-Headers: *
+Content-Type: application/json
+Content-Encoding: gzip (for responses > 1000 bytes)
+X-Process-Time: 0.123 (processing time in seconds)
+X-RateLimit-Limit: 100
+X-RateLimit-Remaining: 99
+X-RateLimit-Reset: 1698052140
+
+
+================================================================================
+INTERACTIVE API DOCUMENTATION
+================================================================================
+
+Swagger UI: http://localhost:8000/docs
+ReDoc: http://localhost:8000/redoc
+OpenAPI JSON: http://localhost:8000/openapi.json
+
+
+================================================================================
+CURL EXAMPLES
+================================================================================
+
+# Get all festivals for 2026
+curl -X GET "http://localhost:8000/api/v1/festivals/2026"
+
+# Get festivals for January 2026 (query parameter)
+curl -X GET "http://localhost:8000/api/v1/festivals/2026?month=1"
+
+# Get festivals for January 2026 (path parameter)
+curl -X GET "http://localhost:8000/api/v1/festivals/2026/month/1"
+
+# Get religious festivals for 2026
+curl -X GET "http://localhost:8000/api/v1/festivals/2026/religious"
+
+# Get religious festivals for January 2026 (query parameter)
+curl -X GET "http://localhost:8000/api/v1/festivals/2026/religious?month=1"
+
+# Get religious festivals for January 2026 (path parameter)
+curl -X GET "http://localhost:8000/api/v1/festivals/2026/religious/month/1"
+
+# Health check
+curl -X GET "http://localhost:8000/health"
+
+# With headers to see rate limit info
+curl -v -X GET "http://localhost:8000/api/v1/festivals/2026"
+
+
+================================================================================
+RATE LIMITING DETAILS
+================================================================================
+
+Rate Limit: 100 requests per 60 seconds per IP address
+
+Headers returned with each response:
+- X-RateLimit-Limit: 100
+- X-RateLimit-Remaining: (remaining requests)
+- X-RateLimit-Reset: (Unix timestamp when limit resets)
+
+When limit exceeded:
+- Status Code: 429 Too Many Requests
+- Retry-After header indicates seconds to wait
+- Response includes retry_after in JSON
+
+
+================================================================================
+CACHING BEHAVIOR
+================================================================================
+
+- Festival data is cached for 1 hour (3600 seconds)
+- Cache is based on: year, month, and endpoint type
+- Subsequent requests within cache TTL return cached data
+- Cache improves performance and reduces load on source website
+
+
+================================================================================
+END OF DOCUMENTATION
+================================================================================

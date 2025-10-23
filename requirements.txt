@@ -1,0 +1,7 @@
+uvicorn
+fastapi
+slowapi
+requests
+beautifulsoup4
+pydantic
+pydantic-settings
