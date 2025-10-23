@@ -1,17 +1,20 @@
+import logging
+import time
+from contextlib import asynccontextmanager
+from datetime import datetime, timezone
+
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import JSONResponse
-from contextlib import asynccontextmanager
-import logging
-import time
-
-from app.config import get_settings
-from app.api.routes import router
-from app.middleware.error_handler import setup_exception_handlers
-from app.middleware.rate_limiter import limiter
 from slowapi.errors import RateLimitExceeded
 from slowapi.middleware import SlowAPIMiddleware
+
+from app.api.routes import router
+from app.config import get_settings
+from app.middleware.error_handler import setup_exception_handlers
+from app.middleware.rate_limiter import limiter
+from app.models.schemas import HealthResponse
 
 # Configure logging
 logging.basicConfig(
@@ -104,14 +107,6 @@ async def log_requests(request: Request, call_next):
     return response
 
 
-# Include API routes
-app.include_router(
-    router,
-    prefix=settings.API_V1_PREFIX,
-    tags=["Festivals"]
-)
-
-
 # Root endpoint
 @app.get(
     "/",
@@ -129,6 +124,30 @@ async def root():
         "api_prefix": settings.API_V1_PREFIX
     }
 
+
+# Health check endpoint (must be at root level for Render)
+@app.get(
+    "/health",
+    response_model=HealthResponse,
+    summary="Health check endpoint",
+    description="Check if the API is running and healthy.",
+    tags=["Health"]
+)
+async def health_check():
+    """Health check endpoint."""
+    return HealthResponse(
+        status="healthy",
+        timestamp=datetime.now(timezone.utc),
+        version=settings.APP_VERSION
+    )
+
+
+# Include API routes
+app.include_router(
+    router,
+    prefix=settings.API_V1_PREFIX,
+    tags=["Festivals"]
+)
 
 if __name__ == "__main__":
     import uvicorn

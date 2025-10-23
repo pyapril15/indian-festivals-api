@@ -1,16 +1,8 @@
-from fastapi import APIRouter, Depends, HTTPException, status, Request
-from typing import Optional, Dict, List
-from datetime import datetime, timezone
 import logging
+from typing import Optional, Dict, List
 
-from app.models.schemas import (
-    FestivalsResponse,
-    ReligiousFestivalsResponse,
-    HealthResponse,
-    ErrorResponse,
-    FestivalItem
-)
-from app.services.festival_service import FestivalService
+from fastapi import APIRouter, Depends, HTTPException, status, Request
+
 from app.api.dependencies import (
     get_festival_service,
     year_path,
@@ -19,6 +11,13 @@ from app.api.dependencies import (
 )
 from app.config import get_settings
 from app.middleware.rate_limiter import limiter
+from app.models.schemas import (
+    FestivalsResponse,
+    ReligiousFestivalsResponse,
+    ErrorResponse,
+    FestivalItem
+)
+from app.services.festival_service import FestivalService
 
 logger = logging.getLogger(__name__)
 settings = get_settings()
@@ -226,19 +225,3 @@ async def get_religious_festivals_by_month(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to fetch religious festivals"
         )
-
-
-@router.get(
-    "/health",
-    response_model=HealthResponse,
-    summary="Health check endpoint",
-    description="Check if the API is running and healthy.",
-    tags=["Health"]
-)
-async def health_check():
-    """Health check endpoint."""
-    return HealthResponse(
-        status="healthy",
-        timestamp=datetime.now(timezone.utc),
-        version=settings.APP_VERSION
-    )
