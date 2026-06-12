@@ -1,4 +1,12 @@
+import os
+
+import pytest
 from fastapi.testclient import TestClient
+
+# FORCE DEVELOPMENT ENVIRONMENT STATE FOR TESTING STABILITY
+# This guarantees that the /docs and /openapi.json specs remain visible during testing
+os.environ["DEBUG"] = "True"
+os.environ["CORS_ORIGINS"] = '["*"]'
 
 from app.main import app
 
@@ -6,7 +14,7 @@ client = TestClient(app)
 
 
 def test_root():
-    """Test root endpoint."""
+    """Test structural welcome message and endpoint metadata connectivity."""
     response = client.get("/")
     assert response.status_code == 200
     data = response.json()
@@ -15,7 +23,7 @@ def test_root():
 
 
 def test_health_check():
-    """Test health check endpoint."""
+    """Test Render automated deployment lifecycle live health probe line."""
     response = client.get("/health")
     assert response.status_code == 200
     data = response.json()
@@ -25,48 +33,48 @@ def test_health_check():
 
 
 def test_get_festivals_valid_year():
-    """Test getting festivals for a valid year."""
-    response = client.get("/api/v1/festivals/2025")
+    """Test getting festivals for a valid year boundary context constraint."""
+    response = client.get("/api/v1/festivals/2026")
     assert response.status_code == 200
     data = response.json()
     assert "year" in data
     assert "festivals" in data
-    assert data["year"] == 2025
+    assert data["year"] == 2026
 
 
 def test_get_festivals_with_month():
-    """Test getting festivals for a specific month."""
-    response = client.get("/api/v1/festivals/2025?month=1")
+    """Test getting festivals filtered by a valid month search query argument."""
+    response = client.get("/api/v1/festivals/2026?month=1")
     assert response.status_code == 200
     data = response.json()
-    assert data["year"] == 2025
+    assert data["year"] == 2026
     assert data["month"] == 1
 
 
 def test_get_festivals_invalid_year():
-    """Test getting festivals with invalid year."""
+    """Test that input validator drops years falling outside historical parameters."""
     response = client.get("/api/v1/festivals/1800")
     assert response.status_code == 422
 
 
 def test_get_festivals_invalid_month():
-    """Test getting festivals with invalid month."""
-    response = client.get("/api/v1/festivals/2025?month=13")
+    """Test that input validator drops query indexes extending beyond standard limits."""
+    response = client.get("/api/v1/festivals/2026?month=13")
     assert response.status_code == 422
 
 
 def test_get_festivals_by_month():
-    """Test getting festivals by month endpoint."""
-    response = client.get("/api/v1/festivals/2025/month/1")
+    """Test explicit calendar index path routing validations."""
+    response = client.get("/api/v1/festivals/2026/month/1")
     assert response.status_code == 200
     data = response.json()
-    assert data["year"] == 2025
+    assert data["year"] == 2026
     assert data["month"] == 1
 
 
 def test_get_religious_festivals():
-    """Test getting religious festivals."""
-    response = client.get("/api/v1/festivals/2025/religious")
+    """Test master religious denomination array grouping outputs."""
+    response = client.get("/api/v1/festivals/2026/religious")
     assert response.status_code == 200
     data = response.json()
     assert "year" in data
@@ -74,34 +82,29 @@ def test_get_religious_festivals():
 
 
 def test_get_religious_festivals_by_month():
-    """Test getting religious festivals by month."""
-    response = client.get("/api/v1/festivals/2025/religious/month/1")
+    """Test explicitly localized religious group path parameters."""
+    response = client.get("/api/v1/festivals/2026/religious/month/1")
     assert response.status_code == 200
     data = response.json()
-    assert data["year"] == 2025
+    assert data["year"] == 2026
     assert data["month"] == 1
 
 
 def test_rate_limiting():
-    """Test rate limiting (simplified test)."""
-    # This is a basic test - in production you'd want more comprehensive rate limit testing
-    responses = []
-    for _ in range(5):
-        response = client.get("/api/v1/festivals/2025")
-        responses.append(response.status_code)
-
-    # At least some requests should succeed
+    """Test system defensive rate-limiter layer tracking limits."""
+    responses = [client.get("/api/v1/festivals/2026").status_code for _ in range(5)]
+    # Ensure standard requests connect cleanly under general limits
     assert 200 in responses
 
 
 def test_cors_headers():
-    """Test CORS headers are present."""
-    response = client.get("/", headers={"Origin": "http://example.com"})
+    """Test security check returns cross-origin safety configurations."""
+    response = client.get("/", headers={"Origin": "https://praveenyadavme.vercel.app"})
     assert "access-control-allow-origin" in response.headers
 
 
 def test_openapi_docs():
-    """Test OpenAPI documentation is accessible."""
+    """Test that framework docs match target layout expectations during mock mode."""
     response = client.get("/docs")
     assert response.status_code == 200
 

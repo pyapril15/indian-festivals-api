@@ -1,213 +1,71 @@
 # Indian Festivals API 🎉
 
-A production-ready FastAPI service providing comprehensive information about Indian festivals, holidays, and
-celebrations.
+![API Response Preview](assets/api_preview.png)
+
+A production-ready, high-performance FastAPI service providing comprehensive information about Indian festivals, holidays, and celebrations. Dynamically scrapes and normalizes calendar dates using an asynchronous parser combined with a thread-safe caching layer.
+
+---
 
 ## 🌟 Features
 
-- **No Authentication Required** - Public API for easy integration
-- **Rate Limited** - 100 requests per minute per IP for fair usage
-- **CORS Enabled** - Access from any origin
-- **Cached Responses** - Fast performance with intelligent caching
-- **Input Validation** - Robust validation using Pydantic
-- **Health Checks** - Monitor API status
-- **Comprehensive Documentation** - Auto-generated OpenAPI docs
-- **Production Ready** - Configured for deployment on Render
-
-## 📋 API Endpoints
-
-### Base URL
-
-```
-Local: http://localhost:8000
-Production: https://your-app.onrender.com
-```
-
-### Endpoints
-
-#### 1. Get All Festivals in a Year
-
-```http
-GET /api/v1/festivals/{year}
-```
-
-**Parameters:**
-
-- `year` (path, required): Year (1900-2100)
-- `month` (query, optional): Month number (1-12)
-
-**Example:**
-
-```bash
-curl "https://your-app.onrender.com/api/v1/festivals/2025"
-curl "https://your-app.onrender.com/api/v1/festivals/2025?month=1"
-```
-
-**Response:**
-
-```json
-{
-  "year": 2025,
-  "month": null,
-  "festivals": {
-    "January": [
-      {
-        "date": "1",
-        "day": "Wednesday",
-        "name": "New Year"
-      }
-    ]
-  }
-}
-```
+- **No Authentication Required** - Fully public API endpoints for ease of integration.
+- **Asynchronous Scraping Engine** - Dynamic, non-blocking page parses powered by `httpx` and `BeautifulSoup4`.
+- **Proxy-Aware Rate Limiting** - Protects routes via `slowapi` using proxy-safe IP extraction (supports Render, Cloudflare, etc.).
+- **Thread-Safe TTL Caching** - Multi-core friendly memory cache with custom item-level expiration rules.
+- **Strict Input Validation** - Bounded numerical checks and string formatting driven by `Pydantic v2`.
+- **Structured Health Monitoring** - Live infrastructure health check endpoints for liveness/readiness probes.
+- **Modern Package Management** - Built using the ultra-fast Python package installer and resolver `uv`.
 
 ---
 
-#### 2. Get Festivals by Month
+## 📋 Documentation Directory
 
-```http
-GET /api/v1/festivals/{year}/month/{month}
-```
+For deep technical insights and usage details, refer to the dedicated documentation files inside the `docs/` folder:
 
-**Parameters:**
-
-- `year` (path, required): Year (1900-2100)
-- `month` (path, required): Month number (1-12)
-
-**Example:**
-
-```bash
-curl "https://your-app.onrender.com/api/v1/festivals/2025/month/1"
-```
-
----
-
-#### 3. Get Religious Festivals
-
-```http
-GET /api/v1/festivals/{year}/religious
-```
-
-**Parameters:**
-
-- `year` (path, required): Year (1900-2100)
-- `month` (query, optional): Month number (1-12)
-
-**Example:**
-
-```bash
-curl "https://your-app.onrender.com/api/v1/festivals/2025/religious"
-curl "https://your-app.onrender.com/api/v1/festivals/2025/religious?month=1"
-```
-
-**Response:**
-
-```json
-{
-  "year": 2025,
-  "month": null,
-  "religious_festivals": {
-    "Hindu Festivals": [
-      {
-        "date": "14",
-        "day": "Tuesday",
-        "month": "January",
-        "name": "Pongal"
-      }
-    ],
-    "Government Holidays": [],
-    "Sikh Festivals": [],
-    "Christian Holidays": []
-  }
-}
-```
-
----
-
-#### 4. Get Religious Festivals by Month
-
-```http
-GET /api/v1/festivals/{year}/religious/month/{month}
-```
-
-**Parameters:**
-
-- `year` (path, required): Year (1900-2100)
-- `month` (path, required): Month number (1-12)
-
-**Example:**
-
-```bash
-curl "https://your-app.onrender.com/api/v1/festivals/2025/religious/month/1"
-```
-
----
-
-#### 5. Health Check
-
-```http
-GET /health
-```
-
-**Response:**
-
-```json
-{
-  "status": "healthy",
-  "timestamp": "2025-10-22T10:30:00.000Z",
-  "version": "1.0.0"
-}
-```
-
----
-
-#### 6. API Documentation
-
-- **Swagger UI**: `https://your-app.onrender.com/docs`
-- **ReDoc**: `https://your-app.onrender.com/redoc`
-- **OpenAPI JSON**: `https://your-app.onrender.com/openapi.json`
+* **[API Endpoint Reference](file:///e:/codeLabPraveen/own/program/python/prj/apis/indian-festivals-api/docs/api.md)**: Details path parameters, response schemas, and curl/client invocation examples.
+* **[Caching Architecture](file:///e:/codeLabPraveen/own/program/python/prj/apis/indian-festivals-api/docs/cache.md)**: Explains the internal TTLCache mechanics and custom expiration tuple wrapping.
+* **[Data Models & Schemas](file:///e:/codeLabPraveen/own/program/python/prj/apis/indian-festivals-api/docs/schema.md)**: Details Pydantic validation structures and response payloads.
+* **[Scraper & Color Mapping Design](file:///e:/codeLabPraveen/own/program/python/prj/apis/indian-festivals-api/docs/architecture.md)**: Illustrates the project module structure and Astrosage Panchang color-parsing mechanics.
+* **[Upgrade Blueprint](file:///e:/codeLabPraveen/own/program/python/prj/apis/indian-festivals-api/docs/upgrade_blueprint.md)**: Details the migration path and design decisions made when upgrading from 1.0.0 to 1.0.1.
 
 ---
 
 ## 🚀 Quick Start
 
 ### Prerequisites
+* **Python 3.14+**
+* **[uv](https://github.com/astral-sh/uv)** (Python package manager)
 
-- Python 3.9+
-- pip
-
-### Local Development
+### Local Development Setup
 
 1. **Clone the repository**
+   ```bash
+   git clone https://github.com/pyapril15/indian-festivals-api.git
+   cd indian-festivals-api
+   ```
 
-```bash
-git clone https://github.com/pyapril15/indian-festivals-api.git
-cd indian-festivals-api
-```
+2. **Initialize Environment Variables**
+   Create a local `.env` file by copying the template:
+   ```bash
+   cp .env.example .env
+   ```
 
-2. **Create virtual environment**
+3. **Install Dependencies & Set Up Virtual Environment**
+   Using `uv`, download and synchronize all dependencies instantly:
+   ```bash
+   uv sync
+   ```
 
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
+4. **Run the Application**
+   Run the ASGI server locally under development reload modes:
+   ```bash
+   uv run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+   ```
 
-3. **Install dependencies**
-
-```bash
-pip install -r requirements.txt
-```
-
-4. **Run the application**
-
-```bash
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-```
-
-5. **Access the API**
-
-- API: http://localhost:8000
-- Docs: http://localhost:8000/docs
+5. **Verify Live Access**
+   * **API Root**: [http://localhost:8000/](http://localhost:8000/)
+   * **Swagger Interactive UI**: [http://localhost:8000/docs](http://localhost:8000/docs) (Only visible when `DEBUG=True` in `.env`)
+   * **Health Check**: [http://localhost:8000/health](http://localhost:8000/health)
 
 ---
 
@@ -216,286 +74,99 @@ uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 indian-festivals-api/
 ├── app/
-│   ├── __init__.py
-│   ├── main.py                 # FastAPI application
-│   ├── config.py               # Configuration settings
-│   ├── models/
-│   │   ├── __init__.py
-│   │   └── schemas.py          # Pydantic models
-│   ├── services/
-│   │   ├── __init__.py
-│   │   └── festival_service.py # Business logic
 │   ├── api/
-│   │   ├── __init__.py
-│   │   ├── routes.py           # API endpoints
-│   │   └── dependencies.py     # Dependency injection
-│   ├── core/
-│   │   ├── __init__.py
-│   │   ├── scraper.py          # Web scraping logic
-│   │   └── cache.py            # Caching mechanism
-│   └── middleware/
-│       ├── __init__.py
-│       ├── rate_limiter.py     # Rate limiting
-│       └── error_handler.py    # Error handling
+│   │   ├── dependencies.py     # Cache and Service lifecycle managers
+│   │   └── routes.py           # Endpoint routers and parameters
+│   ├── middleware/
+│   │   ├── error_handler.py    # Global system exception interceptors
+│   │   └── rate_limiter.py     # IP rate limit controls (slowapi)
+│   ├── models/
+│   │   └── schemas.py          # Pydantic v2 payload models
+│   ├── services/
+│   │   ├── festival_service.py # Coordinates caching and scraping
+│   │   └── scraper.py          # Asynchronous BeautifulSoup parser
+│   ├── utils/
+│   │   └── cache.py            # Thread-safe TTLCache implementation
+│   ├── config.py               # Singleton app configuration
+│   └── main.py                 # FastAPI app entrypoint
+├── docs/                       # Granular markdown documentation
+│   ├── api.md
+│   ├── cache.md
+│   ├── schema.md
+│   └── architecture.md
 ├── tests/
-│   ├── __init__.py
-│   └── test_api.py             # API tests
-├── requirements.txt            # Python dependencies
-├── runtime.txt                 # Python version for Render
-├── render.yaml                 # Render configuration
-├── .gitignore
-└── README.md
+│   └── test_api.py             # Pytest endpoint validation suite
+├── .env.example                # Template configuration variables
+├── pyproject.toml              # Project dependencies and details
+├── render.yaml                 # Infrastructure configuration for Render
+└── uv.lock                     # Locked dependency definitions
 ```
 
 ---
 
 ## 🔧 Configuration
 
-### Environment Variables
+All variables are loaded securely from the `.env` file at startup:
 
-Create a `.env` file (optional):
-
-```env
-# Application
-APP_NAME=Indian Festivals API
-APP_VERSION=1.0.0
-DEBUG=False
-
-# Rate Limiting
-RATE_LIMIT_REQUESTS=100
-RATE_LIMIT_WINDOW=60
-
-# Cache
-CACHE_TTL=3600
-
-# Server
-HOST=0.0.0.0
-PORT=8000
-```
+| Variable | Type | Default | Purpose |
+| :--- | :--- | :--- | :--- |
+| `APP_NAME` | string | `"Indian Festivals API"` | Application signature |
+| `APP_VERSION` | string | `"1.0.1"` | Release version reference |
+| `DEBUG` | boolean | `False` | Disables interactive docs and mock modes if false |
+| `HOST` | string | `"0.0.0.0"` | Local bind interface |
+| `PORT` | integer | `8000` | Server runtime port |
+| `RATE_LIMIT_REQUESTS` | integer | `100` | Maximum allowed request limit |
+| `RATE_LIMIT_WINDOW` | integer | `60` | Duration window in seconds |
+| `CACHE_TTL` | integer | `3600` | Eviction cooldown in seconds |
+| `CORS_ORIGINS` | JSON list | `["https://praveenyadavme.vercel.app"]` | Allowed CORS origins |
 
 ---
 
 ## 🌐 Deploy to Render
 
-### Method 1: One-Click Deploy
+The API is fully pre-configured for instant deployment on [Render](https://render.com) using the in-repo [`render.yaml`](file:///e:/codeLabPraveen/own/program/python/prj/apis/indian-festivals-api/render.yaml) configuration.
 
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
+### Manual Setup on Render Web Console
 
-### Method 2: Manual Deployment
-
-1. **Create a Render account** at https://render.com
-
-2. **Create a new Web Service**
-    - Connect your GitHub repository
-    - Choose "Python" as the environment
-
-3. **Configure the service**
-    - **Name**: indian-festivals-api
-    - **Region**: Choose closest to your users
-    - **Branch**: main
-    - **Build Command**: `pip install -r requirements.txt`
-    - **Start Command**: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
-    - **Instance Type**: Free or Starter
-
-4. **Environment Variables** (Optional)
-    - Add any custom environment variables
-
-5. **Deploy**
-    - Click "Create Web Service"
-    - Wait for deployment to complete
-
-6. **Access your API**
-    - Your API will be available at: `https://your-app-name.onrender.com`
-
----
-
-## 📊 Rate Limiting
-
-The API implements rate limiting to ensure fair usage:
-
-- **Limit**: 100 requests per minute per IP address
-- **Response Headers**:
-    - `X-RateLimit-Limit`: Maximum requests allowed
-    - `X-RateLimit-Remaining`: Remaining requests
-    - `X-RateLimit-Reset`: Time when limit resets (Unix timestamp)
-
-**When rate limit exceeded:**
-
-```json
-{
-  "detail": "Rate limit exceeded. Please try again later.",
-  "retry_after": 60
-}
-```
-
----
-
-## 🛡️ Security Features
-
-1. **Input Validation**: All inputs validated using Pydantic
-2. **Rate Limiting**: Prevents API abuse
-3. **CORS Configuration**: Controlled cross-origin access
-4. **Error Handling**: No sensitive information in error messages
-5. **Timeout Protection**: Request timeouts prevent resource exhaustion
-6. **Content Security**: Response validation
+1. Create a **New Web Service** and link your repository branch.
+2. Select **Python** as the runtime environment.
+3. Configure the environment variables:
+   * Key: `PYTHON_VERSION`, Value: `3.14.0`
+4. Apply the `uv` build instructions:
+   * **Build Command**: `uv sync --frozen --no-dev`
+   * **Start Command**: `uv run uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+5. Configure the Live Health Probe path to `/health` to allow Render to safely coordinate blue-green deployment lifecycle transitions.
 
 ---
 
 ## 🧪 Testing
 
-Run tests locally:
+Run the test suite locally using the following `uv` command:
 
 ```bash
-# Install test dependencies
-pip install pytest pytest-asyncio httpx
-
-# Run tests
-pytest tests/ -v
-
-# Run with coverage
-pytest tests/ --cov=app --cov-report=html
+# Installs pytest & runs validation checks against local environment
+uv run --with pytest --with pytest-asyncio --with httpx pytest tests/ -v
 ```
 
 ---
 
-## 📈 Performance
+## 🔄 Changelog
 
-- **Caching**: Responses cached for 1 hour
-- **Async Processing**: Non-blocking operations
-- **Connection Pooling**: Efficient HTTP requests
-- **Response Compression**: Gzip compression enabled
+### Version 1.0.1 (2026-06-12)
+- Upgraded package execution layers to use `uv` and Python `3.14`.
+- Extracted documentation into a dedicated `docs/` folder.
+- Replaced legacy text reference files with detailed markdown files (`api.md`, `cache.md`, `schema.md`, `architecture.md`).
+- Added a `.env.example` file.
+- Fixed a rate-limiting duration string format error causing requests to crash under middleware processing.
+- Resolved a custom TTL caching bug where tuples returned were not properly unwrapped during cache hits.
 
----
-
-## 🐛 Error Responses
-
-### 400 Bad Request
-
-```json
-{
-  "detail": "Month must be between 1 and 12"
-}
-```
-
-### 404 Not Found
-
-```json
-{
-  "detail": "No festivals found for the specified period"
-}
-```
-
-### 429 Too Many Requests
-
-```json
-{
-  "detail": "Rate limit exceeded. Please try again later.",
-  "retry_after": 60
-}
-```
-
-### 500 Internal Server Error
-
-```json
-{
-  "detail": "An unexpected error occurred. Please try again later."
-}
-```
-
----
-
-## 📝 Example Usage
-
-### Python
-
-```python
-import requests
-
-# Get all festivals for 2025
-response = requests.get("https://your-app.onrender.com/api/v1/festivals/2025")
-data = response.json()
-print(data)
-
-# Get January 2025 festivals
-response = requests.get("https://your-app.onrender.com/api/v1/festivals/2025/month/1")
-data = response.json()
-print(data)
-```
-
-### JavaScript
-
-```javascript
-// Using fetch
-fetch('https://your-app.onrender.com/api/v1/festivals/2025')
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.error('Error:', error));
-
-// Using axios
-axios.get('https://your-app.onrender.com/api/v1/festivals/2025')
-    .then(response => console.log(response.data))
-    .catch(error => console.error('Error:', error));
-```
-
-### cURL
-
-```bash
-# Get all festivals
-curl -X GET "https://your-app.onrender.com/api/v1/festivals/2025"
-
-# Get religious festivals
-curl -X GET "https://your-app.onrender.com/api/v1/festivals/2025/religious"
-
-# Get festivals for specific month
-curl -X GET "https://your-app.onrender.com/api/v1/festivals/2025?month=1"
-```
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
+### Version 1.0.0 (2025-10-22)
+- Initial release.
+- Integrated BeautifulSoup scraping from Astrosage.
+- Implemented rate-limiting and memory cache policies.
 
 ---
 
 ## 📄 License
 
 This project is licensed under the MIT License.
-
----
-
-## 🙏 Acknowledgments
-
-- Festival data sourced from [Panchang AstroSage](https://panchang.astrosage.com/)
-- Built with [FastAPI](https://fastapi.tiangolo.com/)
-
----
-
-## 📞 Support
-
-For issues and questions:
-
-- Open an issue on GitHub
-- Check the API documentation at `/docs`
-
----
-
-## 🔄 Changelog
-
-### Version 1.0.0 (2025-10-22)
-
-- Initial release
-- Basic festival API endpoints
-- Rate limiting implementation
-- Caching mechanism
-- Production deployment configuration
-
----
-
-**Made with ❤️ for the Indian community**
-
----
-
-## 📂 Complete File Structure
-
-Below are all the files you need to create for this project. Copy each file exactly as provided.
